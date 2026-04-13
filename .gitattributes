@@ -1,0 +1,4 @@
+wwwroot/js/bootstrap*.js linguist-vendored
+wwwroot/js/jquery*.js linguist-vendored
+wwwroot/css/bootstrap*.css linguist-vendored
+wwwroot/fontawesome/** linguist-vendored

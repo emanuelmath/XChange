@@ -1,0 +1,125 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --my-light-blue: #5572b2;
+    --my-cyan: #82a1d1;
+    --my-blue: #344c92;
+    --my-dark-blue: #1c2751;
+    --my-green: #8a9586;
+    --my-bgcolor: #e8e8e8;
+}
+
+body {
+    font-family: "Exo 2", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+    background-color: var(--my-bgcolor);
+}
+
+/*.text-red {
+    color: var(--my-red) !important;
+}
+
+.text-cyan {
+    color: var(--my-cyan) !important;
+}
+
+.text-white {
+    color: var(--my-white) !important;
+}
+
+.text-white:hover {
+    color: var(--my-cyan) !important;
+}
+
+.text-black {
+    color: var(--my-black) !important;
+}
+
+.btn-white {
+    background-color: var(--my-white);
+    border-color: var(--my-white);
+    color: var(--my-black); 
+}
+
+.btn-white:hover {
+    background-color: var(--my-cyan);
+    color: var(--my-black);
+}
+
+.btn-black {
+    background-color: var(--my-black);
+    border-color: var(--my-black);
+    color: var(--my-white);
+}
+
+.btn-black:hover {
+    background-color: var(--my-red);
+    color: var(--my-white);
+}
+
+.card-blue {
+    background-color: var(--my-black);
+    border: 3px solid var(--my-red);
+    border-radius: 20px;
+    color: var(--my-white);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.card-blue:hover {
+    transform: scale(1.05);
+}
+
+header.sticky-top {
+    background-color: var(--my-bgcolor); 
+    z-index: 1020; 
+}
+
+a {
+    color: var(--my-cyan);
+    text-decoration: none;
+}
+
+.a-link {
+    text-decoration: underline;
+    font-size: 0.9rem;
+    color: var(--my-white);
+}
+
+.a-link:hover {
+    color: var(--my-cyan);
+}
+
+.my-card-body {
+    background-color: var(--my-bgcolor)
+}
+
+.section-login {
+    max-width: 450px;
+}
+
+.section-register {
+    max-width: 600px;
+}
+
+.login-card, .register-card {
+    background-color: var(--my-black);
+    border: 2px solid var(--my-red);
+    border-radius: 40px;
+}
+
+.login-input, .register-input {
+    background-color: var(--my-bgcolor) !important;
+    border: 1px solid var(--my-white) !important;
+    color: var(--my-white) !important;
+}
+
+.form-floating label {
+    color: var(--my-white);
+}*/
