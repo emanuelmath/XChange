@@ -1,18 +1,14 @@
 ﻿@*
-    Vista parcial de registro para la aplicación XChange
+    Vista parcial para la verificación de código de MFA para el módulo Auth.
 *@
-
-@using XChange.Web.ViewModels
-@model RegisterViewModel
-
 @{
-    ViewData["Title"] = "Registro";
+    ViewData["Title"] = "Verificación de código";
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<h1>Vista de Registro</h1>
+<h1>Vista de Verificación</h1>
 <a role="button" class="btn btn-primary" asp-action="Login" asp-controller="Auth">Ir a login</a>
-<a role="button" class="btn btn-primary" asp-action="VerifyMfa" asp-controller="Auth">Ir a verificación</a>
+<a role="button" class="btn btn-primary" asp-action="Register" asp-controller="Auth">Ir a register</a>
 <a role="button" class="btn btn-primary" asp-action="ForgotPassword" asp-controller="Auth">Ir a recover</a>
 
 @section Scripts
@@ -22,5 +18,5 @@
 
 @section Styles
 {
-    <link rel="stylesheet" href="~/css/auth/register.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth/verifymfa.css" asp-append-version="true" />
 }

@@ -1,139 +1,26 @@
-﻿@using XChange.Web.ViewModels;
+﻿@*
+    Vista parcial de Inicio de sesión para la aplicación XChange.
+*@
+
+@using XChange.Web.ViewModels;
 @model LoginViewModel
 
 @{
     ViewData["Title"] = "Iniciar sesión";
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inicio de sesión</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+<h1>Vista de Login</h1>
+<a role="button" class="btn btn-primary" asp-action="VerifyMfa" asp-controller="Auth">Ir a verificación</a>
+<a role="button" class="btn btn-primary" asp-action="Register" asp-controller="Auth">Ir a register</a>
+<a role="button" class="btn btn-primary" asp-action="ForgotPassword" asp-controller="Auth">Ir a recover</a>
 
-</head>
-<body>
+@section Scripts
+{
+    <script src="~/js/ajax/auth-ajax-scripts.js" asp-append-version="true"></script>
+}
 
-    <!-- Sección de encabezado de página -->
-    <header class="bg-white shadow-sm py-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="h4 mb-0 fw-bolder text-primary tracking-tight">XChange</h1>
-        </div>
-    </header>
-
-    <!-- Contenido de página -->
-    <main class="flex-grow-1 d-flex align-items-center py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <article class="col-12 col-xl-10">
-                    <div class="card border-0 shadow-lg overflow-hidden rounded-4">
-                        <div class="row g-0">
-
-                            <aside class="col-lg-6 d-none d-lg-flex bg-primary text-white p-5 flex-column justify-content-center position-relative">
-                                <div class="z-1 pe-4">
-                                    <h2 class="display-6 fw-bold mb-4">Bienvenido a XChange</h2>
-                                    <p class="lead mb-5 opacity-75">
-                                        Inicia sesión para acceder a tu billetera digital, revisar tus transacciones y gestionar tu dinero de forma segura.
-                                    </p>
-
-                                    <ul class="list-unstyled fs-5 mb-0">
-                                        <li class="mb-3 d-flex align-items-center">
-                                            <i class="fa-solid fa-shield-halved me-3 fs-4"></i> Acceso seguro
-                                        </li>
-                                        <li class="mb-3 d-flex align-items-center">
-                                            <i class="fa-solid fa-chart-pie me-3 fs-4"></i> Control de gastos
-                                        </li>
-                                        <li class="d-flex align-items-center">
-                                            <i class="fa-solid fa-bolt me-3 fs-4"></i> Transferencias rápidas
-                                        </li>
-                                    </ul>
-                                </div>
-                            </aside>
-
-                            <section class="col-12 col-lg-6 p-4 p-md-5 bg-white">
-                                <div class="px-xl-4 py-xl-3">
-                                
-                                    <header class="mb-5">
-                                        <h3 class="fw-bold mb-1">Iniciar sesión</h3>
-                                        <p class="text-muted mb-0">Ingresa tus credenciales para continuar</p>
-                                    </header>
-
-                                    <form id="loginForm">
-
-                                        @Html.AntiForgeryToken()
-
-                                        <div class="form-floating mb-3">
-                                            <input asp-for="Email" class="form-control" placeholder="ejemplo@correo.com" required>
-                                                <label asp-for="Email" class="text-muted">Correo</label>
-                                            </div>
-
-                                            <div class="form-floating mb-4">
-                                                <input asp-for="Password" type="password" class="form-control" placeholder="•••••••" required>
-                                                    <label asp-for="Password" class="text-muted">Contraseña</label>
-                                                </div>
-
-                                        <div class="d-flex justify-content-between align-items-center mb-4">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="remember">
-                                                <label class="form-check-label text-muted small" for="remember">
-                                                    Recordarme
-                                                </label>
-                                            </div>
-                                            <a href="#" class="text-decoration-none small fw-semibold">¿Olvidaste tu contraseña?</a>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-primary btn-lg w-100 mb-4 fw-semibold shadow-sm">
-                                            Iniciar sesión
-                                        </button>
-
-                                        <div class="position-relative mb-4 text-center">
-                                            <hr class="text-muted border-secondary opacity-25">
-                                            <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">o</span>
-                                        </div>
-                                       
-                                        <footer class="text-center mt-auto">
-                                            <p class="text-muted small mb-0">
-                                                ¿No tienes cuenta? <a asp-action="Register" asp-controller="Auth" class="text-decoration-none fw-semibold">Regístrate</a>
-                                            </p>
-                                        </footer>
-
-                                    </form>
-
-                                    <form asp-controller="Auth" asp-action="LoginOrRegisterWithGoogle" method="post">
-                                        <button type="submit" class="btn btn-outline-dark w-100 mb-4 py-2 fw-semibold d-flex align-items-center justify-content-center">
-                                            <i class="fa-brands fa-google me-2"></i> Continuar con Google
-                                        </button>
-                                    </form>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </main>
-
-    <!-- Sección de pie de página -->
-    <footer class="bg-white border-top py-4 mt-auto">
-        <div class="container text-center">
-            <small class="text-muted fw-medium">&copy; @DateTime.Now.Year XChange. Todos los derechos reservados.</small>
-        </div>
-    </footer>
-
-    <!-- sección de scripts -->
-    <script src="~/js/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="~/js/ajax-scripts.js" asp-append-version="true"></script>
-    <script src="~/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/toast-script.js" asp-append-version="true"></script>
-
-</body>
-</html>
+@section Styles 
+{
+    <link rel="stylesheet" href="~/css/auth/login.css" asp-append-version="true" />
+}

@@ -33,6 +33,20 @@ namespace XChange.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        [RedirectIfAuthenticated]
+        public IActionResult VerifyMfa()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [RedirectIfAuthenticated]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> RegisterUser(RegisterViewModel request)

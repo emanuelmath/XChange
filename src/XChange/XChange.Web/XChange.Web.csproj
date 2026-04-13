@@ -16,4 +16,9 @@
     <ProjectReference Include="..\XChange.Infrastructure\XChange.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\home\" />
+    <Folder Include="wwwroot\css\user\" />
+  </ItemGroup>
+
 </Project>
