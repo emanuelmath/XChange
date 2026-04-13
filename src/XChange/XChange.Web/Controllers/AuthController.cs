@@ -8,21 +8,26 @@ using XChange.Core.Constants;
 using XChange.Core.Entities;
 using XChange.Core.Exceptions;
 using XChange.Core.Interfaces;
+using XChange.Web.Filters;
 using XChange.Web.ViewModels;
 
 namespace XChange.Web.Controllers
 {
-    [AllowAnonymous]
+    
     public class AuthController(
             IUserRepository userRepo,
             //IUser2faRepository faRepo,
             IPasswordHasher passwordHasher) : Controller
     {
+        [AllowAnonymous]
+        [RedirectIfAuthenticated]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
+        [RedirectIfAuthenticated]
         public IActionResult Register()
         {
             return View();
