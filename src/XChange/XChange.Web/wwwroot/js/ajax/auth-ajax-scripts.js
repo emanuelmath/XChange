@@ -44,7 +44,7 @@ $(document).ready(function () {
                     case 1:
                         toastr.success(resp.msg || "Inicio de sesión exitoso");
                         setTimeout(() => {
-                            window.location.href = "/User/Index";
+                            window.location.href = "/User/Dashboard";
                         }, 3000);
                         break;
 
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 }
             },
 
-            error: function (jqxhr) {
+            error: function (jqxhr, textStatus, errorThrown) {
                 toastr.error("Error inesperado en el servidor");
                 console.error("Error AJAX:", textStatus, errorThrown);
             },
@@ -149,7 +149,7 @@ $(document).ready(function () {
                 }
             },
 
-            error: function (jqxhr) {
+            error: function (jqxhr, textStatus, errorThrown) {
                 toastr.error("Error inesperado en el servidor");
                 console.error("Error AJAX:", textStatus, errorThrown);
             },
