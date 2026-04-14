@@ -36,9 +36,6 @@ $(document).ready(function () {
             url: "/Auth/LoginUser",
             type: "POST",
             data: $form.serialize(),
-            headers: {
-                "RequestVerificationToken": token
-            },
             timeout: 10000,
 
             success: function (resp) {
@@ -47,7 +44,7 @@ $(document).ready(function () {
                     case 1:
                         toastr.success(resp.msg || "Inicio de sesión exitoso");
                         setTimeout(() => {
-                            window.location.href = "/User/Dashboard";
+                            window.location.href = "/User/Index";
                         }, 3000);
                         break;
 
@@ -121,15 +118,10 @@ $(document).ready(function () {
 
         $btn.prop('disabled', true);
 
-        const token = $form.find('input[name="__RequestVerificationToken"]').val();
-
         $.ajax({
             url: "/Auth/RegisterUser",
             type: "POST",
             data: $form.serialize(),
-            headers: {
-                "RequestVerificationToken": token
-            },
             timeout: 10000,
 
             success: function (resp) {
@@ -140,7 +132,7 @@ $(document).ready(function () {
                         toastr.success(resp.msg || "Cuenta creada correctamente");
                         setTimeout(() => {
                             window.location.href = "/Auth/Login";
-                        }, 1500);
+                        }, 3000);
                         break;
 
                     case 0:
