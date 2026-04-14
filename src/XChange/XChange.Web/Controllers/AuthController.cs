@@ -160,7 +160,6 @@ namespace XChange.Web.Controllers
         }
 
         [HttpGet]
-        [HttpGet]
         public async Task<IActionResult> GoogleCallback()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
