@@ -115,6 +115,26 @@ namespace XChange.Web.Controllers
                 return Json(new { cod = 99, msg = "Error de seguridad: La cuenta tiene una contraseña obsoleta." });
             }
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                IsPersistent = request.RememberMe, 
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1) 
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
             // Guardamos datos temporales para el flujo de MFA.
             TempData["PendingUserId"] = user.Id;
             TempData["PendingUserEmail"] = user.Email;
