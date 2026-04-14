@@ -16,7 +16,7 @@ $(document).ready(function () {
      *      -Cod 1: Proceso exitoso.
      *      -Cod 0: Credenciales incorrectas.
      *      -Cod 99: Error interno.
-     */
+    */
     $("#loginForm").on("submit", function (event) {
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -36,9 +36,6 @@ $(document).ready(function () {
             url: "/Auth/LoginUser",
             type: "POST",
             data: $form.serialize(),
-            headers: {
-                "RequestVerificationToken": token
-            },
             timeout: 10000,
 
             success: function (resp) {
@@ -127,9 +124,6 @@ $(document).ready(function () {
             url: "/Auth/RegisterUser",
             type: "POST",
             data: $form.serialize(),
-            headers: {
-                "RequestVerificationToken": token
-            },
             timeout: 10000,
 
             success: function (resp) {
@@ -140,7 +134,7 @@ $(document).ready(function () {
                         toastr.success(resp.msg || "Cuenta creada correctamente");
                         setTimeout(() => {
                             window.location.href = "/Auth/Login";
-                        }, 1500);
+                        }, 3000);
                         break;
 
                     case 0:
