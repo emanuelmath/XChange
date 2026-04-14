@@ -44,7 +44,7 @@ $(document).ready(function () {
                     case 1:
                         toastr.success(resp.msg || "Inicio de sesión exitoso");
                         setTimeout(() => {
-                            window.location.href = "/User/Dashboard";
+                            window.location.href = "/User/Index";
                         }, 3000);
                         break;
 
@@ -117,8 +117,6 @@ $(document).ready(function () {
         }
 
         $btn.prop('disabled', true);
-
-        const token = $form.find('input[name="__RequestVerificationToken"]').val();
 
         $.ajax({
             url: "/Auth/RegisterUser",
