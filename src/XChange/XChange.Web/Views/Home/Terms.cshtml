@@ -1,0 +1,111 @@
+﻿@*
+    Ruta de Términos y condiciones de uso de la aplicación XChange
+*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Términos y condiciones de uso</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast-style.css" asp-append-version="true" />
+</head>
+<body>
+
+    <main class="py-5">
+        <div class="container">
+
+            <!-- Título -->
+            <header class="mb-4">
+                <h1 class="fw-bold">Términos y Condiciones de Uso</h1>
+                <p class="text-muted small">
+                    Última actualización: @DateTime.Now.ToString("dd/MM/yyyy")
+                </p>
+            </header>
+
+            <!-- Introducción -->
+            <section class="mb-4">
+                <p>
+                    Bienvenido a XChange. Al acceder y utilizar esta plataforma, aceptas cumplir con los siguientes
+                    términos y condiciones. Este documento tiene fines ilustrativos dentro de un proyecto académico.
+                </p>
+            </section>
+
+            <!-- Uso del servicio -->
+            <section class="mb-4">
+                <h5 class="fw-semibold">1. Uso del servicio</h5>
+                <p>
+                    El usuario se compromete a utilizar la plataforma de manera responsable y conforme a la ley.
+                    Queda prohibido el uso indebido del sistema o cualquier intento de vulnerar su seguridad.
+                </p>
+            </section>
+
+            <!-- Cuenta de usuario -->
+            <section class="mb-4">
+                <h5 class="fw-semibold">2. Cuenta de usuario</h5>
+                <p>
+                    El usuario es responsable de mantener la confidencialidad de sus credenciales y de todas las
+                    actividades realizadas desde su cuenta.
+                </p>
+            </section>
+
+            <!-- Seguridad -->
+            <section class="mb-4">
+                <h5 class="fw-semibold">3. Seguridad</h5>
+                <p>
+                    XChange implementa medidas de seguridad para proteger la información del usuario, sin embargo,
+                    no garantiza la invulnerabilidad absoluta frente a amenazas externas.
+                </p>
+            </section>
+
+            <!-- Limitación de responsabilidad -->
+            <section class="mb-4">
+                <h5 class="fw-semibold">4. Limitación de responsabilidad</h5>
+                <p>
+                    Esta plataforma es parte de un proyecto académico, por lo que no se responsabiliza por pérdidas,
+                    daños o mal uso de la información.
+                </p>
+            </section>
+
+            <!-- Modificaciones -->
+            <section class="mb-4">
+                <h5 class="fw-semibold">5. Modificaciones</h5>
+                <p>
+                    Nos reservamos el derecho de modificar estos términos en cualquier momento sin previo aviso.
+                </p>
+            </section>
+
+            <!-- Contacto -->
+            <section class="mb-5">
+                <h5 class="fw-semibold">6. Contacto</h5>
+                <p>
+                    Para cualquier consulta relacionada con estos términos, puedes comunicarte a través de la sección
+                    de contacto de la plataforma.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-4">
+        <div class="container text-center">
+            <small class="text-muted fw-medium">&copy; @DateTime.Now.Year XChange. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+
+
+    
+    <script src="~/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/toast-script.js"></script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 $(document).ready(function () {
 
+    /* ===== SECCIÓN DE AJAX DE FORMULARIOS ===== */
+
     /**
      * Gestiona la solicitud de autnticación del usuario.
      * 
@@ -158,5 +160,36 @@ $(document).ready(function () {
                 $btn.prop('disabled', false);
             }
         });
+    });
+
+    /* ===== SECCIÓN DE AJAX DE UI BEHAVIOR ===== */
+
+    /**
+     * Alterna el valor del atributo 'type' del input de contraseña para que el usuario pueda visualizar lo que estpá escribiendo.
+     * 
+     * @event change
+     * @param {Event} event - Evento de toggle o cambio de estado del checkbox
+     * 
+     * @description
+     * 1. Captura los eventos de intercambio de estado del checkbox 'Mostrar contraseña' de la pantalla de login.
+     * 2. Alterna el tipo del input de contraseña para mostrar u ocultar el contenido.
+     */
+    $("#showPassword").on("change", function () {
+        const type = this.checked ? "text" : "password";
+        $("#Password").attr("type", type);
+    });
+
+    /**
+     * Alterna el valor del atributo 'type' de ambos inputs de contraseña para que el usuario pueda verlas.
+     * @event change
+     * @param {Event} event - Evento de toggle o cambio de estado del checkbox
+     * 
+     * @description
+     * 1. Captura los eventos de intercambio de estado del checkbox 'Mostrar contraseñas' de la pantalla de registro.
+     * 2. Alterna el tipo del input de contraseña para mostrar u ocultar el contenido.
+     */
+    $("#showPasswords").on("change", function () {
+        const type = this.checked ? "text" : "password";
+        $("#Password, #ConfirmPassword").attr("type", type);
     });
 });

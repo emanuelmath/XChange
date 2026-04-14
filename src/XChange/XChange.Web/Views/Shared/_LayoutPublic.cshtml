@@ -16,9 +16,136 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
+
+    <!-- Header del layout público-->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+            <div class="container">
+
+                <!-- Brand -->
+                <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Landing">
+                    <a class="navbar-brand fw-bold d-flex align-items-center" asp-controller="Home" asp-action="Landing">
+                        <img src="~/images/logo.svg" alt="XChange Logo" class="me-2" height="28">
+                            XChange
+                        </a>
+                </a>
+
+                <!-- Toggle mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Landing">Inicio</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="About">Acerca de</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact">Contacto</a>
+                        </li>
+
+                        <li class="nav-item d-none d-lg-block mx-2">
+                            <span class="text-muted">|</span>
+                        </li>
+
+                        <!-- Ir a autenticación -->
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" asp-controller="Auth" asp-action="Login">
+                                Iniciar sesión
+                            </a>
+                        </li>
+
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn btn-primary btn-sm px-3" asp-controller="Auth" asp-action="Register">
+                                Registrarse
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido dinámico del layout -->
     <div>
         @RenderBody()
     </div>
+     
+    <!-- Pie de página del Layout -->
+    <footer class="bg-light border-top mt-auto">
+        <div class="container py-5">
+
+            <div class="row">
+
+                <!-- Marca -->
+                <div class="col-12 col-md-4 mb-4">
+                        <h5 class="fw-bold d-flex align-items-center">
+                            <img src="~/images/logo.svg" alt="XChange Logo" class="me-2" height="28">
+                                XChange
+                            </h5>
+                    <p class="text-muted small">
+                        Plataforma de billetera digital enfocada en seguridad, rapidez y confianza para tus transacciones.
+                    </p>
+                </div>
+
+                <!-- Navegación -->
+                <div class="col-6 col-md-2 mb-4">
+                    <h6 class="fw-semibold">Navegación</h6>
+                    <ul class="list-unstyled">
+                        <li><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-muted">Inicio</a></li>
+                        <li><a asp-controller="Home" asp-action="About" class="text-decoration-none text-muted">Acerca de</a></li>
+                        <li><a asp-controller="Home" asp-action="Contact" class="text-decoration-none text-muted">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div class="col-6 col-md-3 mb-4">
+                    <h6 class="fw-semibold">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a asp-action="Terms" asp-controller="Home" class="text-decoration-none text-muted" target="_blank">Términos y condiciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Redes -->
+                <div class="col-12 col-md-3 mb-4">
+                    <h6 class="fw-semibold">Síguenos</h6>
+
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-muted fs-5">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-muted fs-5">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-muted fs-5">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-muted fs-5">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Línea inferior -->
+            <div class="border-top pt-3 mt-3 text-center">
+                <small class="text-muted">
+                    &copy; @DateTime.Now.Year XChange. Todos los derechos reservados.
+                </small>
+            </div>
+
+        </div>
+    </footer>
 
     <!-- Scripts -->
     <script src="~/js/jquery.min.js"></script>

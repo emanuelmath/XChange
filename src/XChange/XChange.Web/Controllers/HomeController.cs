@@ -5,9 +5,7 @@ using XChange.Web.Models;
 
 namespace XChange.Web.Controllers
 {
-    [Authorize] //Si todos las rutas son privadas, se le pone a la clase.
-    // Se puede liberar alguna que sea pública poniéndole al método el atributo [AllowAnonymous].
-    // Y también solo se puede decir qué nivel de protección tiene cada método sin tener que ponerle al controller.
+    //[Authorize] Lo dejo comentado ya que estas son rutas públicas. 
     public class HomeController : Controller
     {
         public IActionResult Index()
@@ -16,6 +14,26 @@ namespace XChange.Web.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Landing()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Contact() 
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
         {
             return View();
         }

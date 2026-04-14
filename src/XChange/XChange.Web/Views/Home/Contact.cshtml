@@ -1,0 +1,203 @@
+﻿@*
+    Vista parcial de Contacto para el proyecto XChange.
+*@
+@{
+    ViewData["Title"] = "Contáctanos";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+<main>
+
+    <!-- HERO -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+
+            <h1 class="fw-bold mb-3">Contáctanos</h1>
+
+            <p class="text-muted">
+                Estamos aquí para ayudarte. Ponte en contacto con nuestro equipo o soporte técnico.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE CONTACTO -->
+    <section class="py-5">
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-12 col-lg-8">
+                    <div class="card border-0 shadow-sm p-4 p-lg-5">
+
+                        <h4 class="fw-bold mb-4 text-center">Envíanos un mensaje</h4>
+
+                        <form id="contactForm">
+
+                            <!-- Nombre -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="name" placeholder="Nombre completo" required>
+                                <label for="name">Nombre completo</label>
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="correo@ejemplo.com" required>
+                                <label for="email">Correo electrónico</label>
+                            </div>
+
+                            <!-- Asunto -->
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="subject" placeholder="Asunto" required>
+                                <label for="subject">Asunto</label>
+                            </div>
+
+                            <!-- Mensaje -->
+                            <div class="form-floating mb-4">
+                                <textarea class="form-control" placeholder="Escribe tu mensaje" id="message" style="height: 120px;" required></textarea>
+                                <label for="message">Mensaje</label>
+                            </div>
+
+                            <!-- Botón -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary fw-bold">
+                                    <i class="fa-solid fa-paper-plane me-2"></i>Enviar mensaje
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INFORMACIÓN DE CONTACTO -->
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+
+            <h2 class="fw-bold mb-3">Soporte y contacto directo</h2>
+            <p class="text-muted mb-5">
+                También puedes comunicarte con nosotros a través de los siguientes medios.
+            </p>
+
+            <div class="row g-4">
+
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-envelope text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Correo</h6>
+                        <p class="text-muted small">soporte@xchange.com</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-phone text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Teléfono</h6>
+                        <p class="text-muted small">+503 7000 0000</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-location-dot text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Ubicación</h6>
+                        <p class="text-muted small">San Salvador, El Salvador</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DESARROLLADORES -->
+    <section class="py-5">
+        <div class="container text-center">
+
+            <h2 class="fw-bold mb-3">Equipo de desarrollo</h2>
+            <p class="text-muted mb-5">
+                Conoce a los desarrolladores detrás de XChange.
+            </p>
+
+            <div class="row g-4">
+
+                <!-- Dev 1 -->
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-user text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Carlos Martínez</h6>
+                        <p class="text-muted small mb-2">Backend Developer</p>
+                        <p class="text-muted small">carlos.dev@email.com</p>
+                    </div>
+                </div>
+
+                <!-- Dev 2 -->
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-user text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Ana López</h6>
+                        <p class="text-muted small mb-2">Frontend Developer</p>
+                        <p class="text-muted small">ana.front@email.com</p>
+                    </div>
+                </div>
+
+                <!-- Dev 3 -->
+                <div class="col-12 col-md-4">
+                    <div class="card border-0 shadow-sm p-4 h-100">
+                        <i class="fa-solid fa-user text-primary fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Luis Gómez</h6>
+                        <p class="text-muted small mb-2">Fullstack Developer</p>
+                        <p class="text-muted small">luis.full@email.com</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FAQ / AYUDA -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <h2 class="fw-bold text-center mb-5">Preguntas frecuentes</h2>
+
+            <div class="accordion" id="faqAccordion">
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            ¿Cómo puedo crear una cuenta?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show">
+                        <div class="accordion-body text-muted small">
+                            Puedes registrarte fácilmente desde la página principal haciendo clic en "Crear cuenta".
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            ¿Es segura la plataforma?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse">
+                        <div class="accordion-body text-muted small">
+                            Sí, implementamos múltiples capas de seguridad para proteger tus datos y transacciones.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
