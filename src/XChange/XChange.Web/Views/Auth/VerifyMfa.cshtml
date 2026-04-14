@@ -6,10 +6,81 @@
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<h1>Vista de Verificación</h1>
-<a role="button" class="btn btn-primary" asp-action="Login" asp-controller="Auth">Ir a login</a>
-<a role="button" class="btn btn-primary" asp-action="Register" asp-controller="Auth">Ir a register</a>
-<a role="button" class="btn btn-primary" asp-action="ForgotPassword" asp-controller="Auth">Ir a recover</a>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+
+        <!-- Card general -->
+        <div class="col-12 col-lg-10 col-xl-8">
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                <div class="row g-0">
+
+                    <!-- Banner lateral -->
+                    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
+
+                        <h2 class="mb-4 fw-bold">Verificación de seguridad</h2>
+
+                        <p class="mb-4">
+                            Hemos enviado un código de verificación a tu correo electrónico.
+                        </p>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fa-solid fa-envelope me-2"></i>
+                                Revisa tu bandeja de entrada
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-clock me-2"></i>
+                                El código expira en pocos minutos
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-shield-halved me-2"></i>
+                                Protección adicional para tu cuenta
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
+                        <div class="w-100 text-center">
+
+                            <h4 class="mb-3 fw-bold">Verificar código</h4>
+
+                            <p class="text-muted mb-4">
+                                Ingresa el código de verificación enviado a tu correo
+                            </p>
+
+                            <form id="verifyCodeForm">
+                                @Html.AntiForgeryToken()
+
+                                <!-- Input de Código -->
+                                <div class="form-floating mb-4">
+                                    <input type="number" class="form-control text-center" placeholder="000000" required>
+                                    <label class="text-muted">Código de verificación</label>
+                                </div>
+
+                                <!-- Botones de acción -->
+                                <div class="d-flex gap-2">
+
+                                    <a asp-action="Login" asp-controller="Auth"
+                                           class="btn btn-outline-danger w-50">
+                                        Cancelar
+                                    </a>
+
+                                    <button type="submit" class="btn btn-primary w-50">
+                                        Confirmar
+                                    </button>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {

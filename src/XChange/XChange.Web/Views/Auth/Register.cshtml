@@ -10,10 +10,149 @@
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<h1>Vista de Registro</h1>
-<a role="button" class="btn btn-primary" asp-action="Login" asp-controller="Auth">Ir a login</a>
-<a role="button" class="btn btn-primary" asp-action="VerifyMfa" asp-controller="Auth">Ir a verificación</a>
-<a role="button" class="btn btn-primary" asp-action="ForgotPassword" asp-controller="Auth">Ir a recover</a>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+
+        <!-- Card general -->
+        <div class="col-12 col-lg-10 col-xl-8">
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                <div class="row g-0">
+
+                    <!-- Banner lateral -->
+                    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
+
+                        <h2 class="mb-4 fw-bold">Únete a XChange</h2>
+
+                        <p class="mb-4">
+                            Crea tu cuenta y comienza a gestionar tu billetera digital de forma segura y eficiente.
+                        </p>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fa-solid fa-shield-halved me-2"></i>
+                                Seguridad avanzada en cada transacción
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-bolt me-2"></i>
+                                Transferencias rápidas y eficientes
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-lock me-2"></i>
+                                Protección de datos y autenticación segura
+                            </li>
+                        </ul>
+
+                        <div class="mt-4">
+                            <small>
+                                1. Completa tus datos<br />
+                                2. Protege tu cuenta<br />
+                                3. Comienza a operar con seguridad
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
+                        <div class="w-100">
+
+                            <h4 class="mb-4 text-center fw-bold">Crear Cuenta</h4>
+
+                            <form id="registerForm">
+                                @Html.AntiForgeryToken()
+
+                                <!-- Nombres y Apellidos -->
+                                <div class="row g-2 mb-3">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="FirstName" class="form-control" placeholder="Nombres" required>
+                                            <label asp-for="FirstName" class="text-muted">Nombres</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-floating">
+                                            <input asp-for="LastName" class="form-control" placeholder="Apellidos" required>
+                                            <label asp-for="LastName" class="text-muted">Apellidos</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Correo -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Email" class="form-control" placeholder="ejemplo@correo.com"required>
+                                    <label asp-for="Email" class="text-muted">Correo electrónico</label>
+                                </div>
+
+                                <!-- Contraseña -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Password" type="password" class="form-control"placeholder="•••••••" required>
+                                    <label asp-for="Password" class="text-muted">Contraseña</label>
+                                </div>
+
+                                <!-- Confirmar Contraseña -->
+                                <div class="form-floating mb-4">
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control"placeholder="•••••••" required>
+                                    <label asp-for="ConfirmPassword" class="text-muted">Confirmar contraseña</label>
+                                </div>
+
+                                <!-- Mostrar contraseña -->
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="showPasswords">
+                                    <label class="form-check-label" for="showPasswords">
+                                        Mostrar contraseñas
+                                    </label>
+                                </div>
+
+                                <!-- Aceptar términos -->
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="terminos"name="terminos" required>
+                                    <label class="form-check-label" for="terminos">
+                                        Acepto los <a href="#" class="text-decoration-none fw-semibold">
+                                            Términos y Condiciones
+                                        </a>
+                                    </label>
+                                </div>
+
+                                <!-- Botón de registro -->
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-primary fw-bold">
+                                        <i class="fa-solid fa-user-plus me-2"></i>Crear Cuenta
+                                    </button>
+                                </div>
+
+                            </form>
+
+                            <div class="text-center my-3">
+                                <small class="text-muted">o</small>
+                            </div>
+
+                            <!-- Registro con Google -->
+                            <div class="d-grid mb-3">
+                                <form asp-controller="Auth" asp-action="LoginOrRegisterWithGoogle" method="post">
+                                    <button type="submit" class="btn btn-outline-dark w-100 mb-4 py-2 fw-semibold d-flex align-items-center justify-content-center">
+                                        <i class="fa-brands fa-google me-2"></i> Registrarse con Google
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Ir a Login -->
+                            <div class="text-center">
+                                <small>
+                                    ¿Ya tienes una cuenta?
+                                    <a asp-action="Login" asp-controller="Auth" class="text-decoration-none fw-semibold">
+                                        Inicia sesión
+                                    </a>
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts
 {

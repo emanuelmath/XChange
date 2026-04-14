@@ -10,10 +10,125 @@
     Layout = "~/Views/Shared/_LayoutAuth.cshtml";
 }
 
-<h1>Vista de Login</h1>
-<a role="button" class="btn btn-primary" asp-action="VerifyMfa" asp-controller="Auth">Ir a verificación</a>
-<a role="button" class="btn btn-primary" asp-action="Register" asp-controller="Auth">Ir a register</a>
-<a role="button" class="btn btn-primary" asp-action="ForgotPassword" asp-controller="Auth">Ir a recover</a>
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center">
+
+        <!-- Card general -->
+        <div class="col-12 col-lg-10 col-xl-8">
+            <div class="card border-0 shadow rounded-4 overflow-hidden">
+                <div class="row g-0">
+
+                    <!-- Banner lateral -->
+                    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
+
+                        <h2 class="mb-4 fw-bold">Bienvenido a XChange</h2>
+
+                        <p class="mb-4">
+                            Accede a tu billetera digital de forma segura y gestiona tus transacciones con confianza.
+                        </p>
+
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fa-solid fa-shield-halved me-2"></i>
+                                Seguridad avanzada en cada transacción
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-bolt me-2"></i>
+                                Transferencias rápidas y eficientes
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa-solid fa-lock me-2"></i>
+                                Protección de datos y autenticación segura
+                            </li>
+                        </ul>
+
+                        <div class="mt-4">
+                            <small>
+                                1. Ingresa tus credenciales<br />
+                                2. Verifica tu identidad<br />
+                                3. Administra tu dinero de forma segura
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
+                        <div class="w-100">
+                            <h4 class="mb-4 text-center fw-bold">Iniciar Sesión</h4>
+
+                            <form id="loginForm">
+                                @Html.AntiForgeryToken()
+
+                                <!-- Correo -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Email" class="form-control" placeholder="ejemplo@correo.com" required>
+                                    <label asp-for="Email" class="text-muted">Correo electrónico</label>
+                                </div>
+
+                                <!-- Contraseña -->
+                                    <div class="form-floating mb-4">
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="•••••••" required>
+                                        <label asp-for="Password" class="text-muted">Contraseña</label>
+                                    </div>
+
+                                <!-- Mostrar contraseña -->
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="showPassword">
+                                    <label class="form-check-label" for="showPassword">
+                                        Mostrar contraseña
+                                    </label>
+                                </div>
+
+                                <!-- Recordar correo / Olvidé mi contraseña -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" name="RememberMe">
+                                        <label class="form-check-label" for="rememberMe">
+                                            Recordarme
+                                        </label>
+                                    </div>
+                                    <a asp-action="ForgotPassword" asp-controller="Auth" 
+                                    class="small text-decoration-none fw-semibold">¿Olvidaste tu contraseña?</a>
+                                </div>
+
+                                <!-- Botón de inicio de sesión -->
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-primary fw-bold">
+                                        <i class="fa-solid fa-right-to-bracket me-2"></i>Iniciar Sesión
+                                    </button>
+                                </div>
+
+                            </form>
+
+                            <div class="text-center my-3">
+                                <small class="text-muted">o</small>
+                            </div>
+
+                            <!-- Iniciar sesión con Google -->
+                            <div class="d-grid mb-3">
+                                <form asp-controller="Auth" asp-action="LoginOrRegisterWithGoogle" method="post">
+                                    <button type="submit" class="btn btn-outline-dark w-100 mb-4 py-2 fw-semibold d-flex align-items-center justify-content-center">
+                                        <i class="fa-brands fa-google me-2"></i> Continuar con Google
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Registrarse -->
+                            <div class="text-center">
+                                <small>
+                                    ¿No tienes una cuenta?
+                                    <a asp-action="Register" asp-controller="Auth" class="text-decoration-none fw-semibold">Regístrate</a>
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts
 {
