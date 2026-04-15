@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\home\" />
-    <Folder Include="wwwroot\css\user\" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,162 @@
     Layout = "~/Views/Shared/_LayoutPrivate.cshtml";
 }
 
-<h1>Transacciones</h1>
+<main>
+
+    <!-- HEADER -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                    <h2 class="fw-bold mb-2">
+                        Historial de transacciones
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Consulta todos los movimientos realizados en tu cuenta.
+                    </p>
+                </div>
+
+                <div class="col-12 col-lg-6 text-lg-end">
+                    <a asp-controller="User" asp-action="Wallet" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-wallet me-2"></i>Volver a billetera
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="py-4">
+        <div class="container">
+
+            <div class="card card-fintech p-4">
+
+                <div class="row g-3">
+
+                    <!-- Buscar -->
+                    <div class="col-12 col-md-4">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="Buscar">
+                            <label>Buscar por referencia</label>
+                        </div>
+                    </div>
+
+                    <!-- Tipo -->
+                    <div class="col-12 col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select">
+                                <option value="">Todos</option>
+                                <option value="DEPOSIT">Depósito</option>
+                                <option value="WITHDRAW">Retiro</option>
+                                <option value="TRANSFER">Transferencia</option>
+                            </select>
+                            <label>Tipo</label>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="col-12 col-md-3">
+                        <div class="form-floating">
+                            <select class="form-select">
+                                <option value="">Todos</option>
+                                <option value="PENDING">Pendiente</option>
+                                <option value="COMPLETED">Completado</option>
+                                <option value="FAILED">Fallido</option>
+                            </select>
+                            <label>Estado</label>
+                        </div>
+                    </div>
+
+                    <!-- Botón -->
+                    <div class="col-12 col-md-2 d-grid">
+                        <button class="btn btn-fintech">
+                            <i class="fa-solid fa-filter me-1"></i>Filtrar
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TABLA -->
+    <section class="pb-5">
+        <div class="container">
+
+            <div class="card card-fintech p-4">
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Tipo</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                                <th>Referencia</th>
+                                <th>Fecha</th>
+                                <th class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <!-- Estado vacío -->
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+
+                                    <i class="fa-solid fa-clock fs-2 text-muted mb-3 d-block"></i>
+
+                                    <p class="text-muted mb-0">
+                                        No hay transacciones registradas
+                                    </p>
+
+                                </td>
+                            </tr>
+
+                            <!-- EJEMPLO FUTURO (cuando tengas datos)
+                            <tr>
+                                <td>#1023</td>
+                                <td>
+                                    <span class="badge bg-primary">Depósito</span>
+                                </td>
+                                <td class="fw-semibold text-success">
+                                    +$150.00
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">Completado</span>
+                                </td>
+                                <td>REF-12345</td>
+                                <td>2026-04-15</td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-secondary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            -->
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
 
 @section Scripts
 {
@@ -15,5 +170,5 @@
 
 @section Styles
 {
-    
+    <link rel="stylesheet" href="~/css/user/transactions.css" />
 }

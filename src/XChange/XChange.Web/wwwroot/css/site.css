@@ -1,12 +1,10 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --my-light-blue: #5572b2;
-    --my-cyan: #82a1d1;
-    --my-blue: #344c92;
-    --my-dark-blue: #1c2751;
-    --my-green: #8a9586;
-    --my-bgcolor: #e8e8e8;
+    --light-blue: #5572b2;
+    --cyan: #82a1d1;
+    --blue: #344c92;
+    --dark-blue: #1c2751;
 }
 
 body {
@@ -15,6 +13,32 @@ body {
     font-weight: 450;
     font-style: normal;
     background-color: var(--my-bgcolor);
+}
+
+.bg-fintech {
+    background-color: var(--blue);
+    color: white;
+}
+
+.text-fintech {
+    color: var(--blue);
+}
+
+.btn-fintech {
+    background-color: var(--blue);
+    color: #fff;
+    border: none;
+}
+
+    .btn-fintech:hover {
+        background-color: var(--dark-blue);
+        color: #fff;
+    }
+
+.card-fintech {
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.08);
+    border-radius: 1rem;
 }
 
 /*.text-red {

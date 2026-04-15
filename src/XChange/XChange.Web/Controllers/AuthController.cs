@@ -56,6 +56,7 @@ namespace XChange.Web.Controllers
         }
 
         [AllowAnonymous]
+        [RedirectIfNotLoginForMfa]
         [RedirectIfAuthenticated]
         public IActionResult VerifyEmail()
         {

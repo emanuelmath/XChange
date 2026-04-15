@@ -6,14 +6,201 @@
     Layout = "~/Views/Shared/_LayoutPrivate.cshtml";
 }
 
-<h1>Billetera</h1>
+<main>
+
+    <!-- RESUMEN DE CUENTA -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <!-- Información -->
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-2">
+                        Mi billetera
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Administra tu saldo, realiza movimientos y controla tus fondos de forma segura.
+                    </p>
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button class="btn btn-fintech px-4">
+                            <i class="fa-solid fa-plus me-2"></i>Depositar
+                        </button>
+
+                        <button class="btn btn-outline-secondary px-4">
+                            <i class="fa-solid fa-arrow-up me-2"></i>Retirar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de saldo -->
+                <div class="col-12 col-lg-6">
+                    <div class="card card-fintech p-4 bg-fintech">
+
+                        <h6 class="text-uppercase small mb-2">Saldo disponible</h6>
+                        <h2 class="fw-bold mb-3">$0.00</h2>
+
+                        <div class="d-flex justify-content-between small">
+                            <span>
+                                <i class="fa-solid fa-arrow-down me-1"></i>Ingresos: $0.00
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-arrow-up me-1"></i>Egresos: $0.00
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACCIONES PRINCIPALES -->
+    <section class="py-5">
+        <div class="container">
+
+            <h4 class="fw-bold mb-4">Operaciones</h4>
+
+            <div class="row g-4">
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-plus text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Depositar dinero</h6>
+                        <p class="text-muted small">
+                            Agrega fondos a tu billetera desde tus métodos de pago.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-arrow-up text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Retirar fondos</h6>
+                        <p class="text-muted small">
+                            Transfiere tu dinero hacia una cuenta externa.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-right-left text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Transferir</h6>
+                        <p class="text-muted small">
+                            Envía dinero a otros usuarios de XChange.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MÉTODOS DE PAGO -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Métodos de pago</h4>
+
+                <button class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-plus me-1"></i>Agregar tarjeta
+                </button>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- Sin tarjetas -->
+                <div class="col-12">
+                    <div class="card card-fintech p-4 text-center">
+
+                        <i class="fa-solid fa-credit-card fs-2 text-muted mb-3"></i>
+
+                        <p class="text-muted mb-2">
+                            No tienes métodos de pago registrados
+                        </p>
+
+                        <small class="text-muted">
+                            Agrega una tarjeta para facilitar depósitos y retiros
+                        </small>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MOVIMIENTOS RECIENTES -->
+    <section class="py-5">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Movimientos recientes</h4>
+
+                <a asp-controller="User" asp-action="Transactions" class="small text-decoration-none">
+                    Ver todos
+                </a>
+            </div>
+
+            <div class="card card-fintech p-4">
+
+                <div class="text-center text-muted py-4">
+                    <i class="fa-solid fa-clock fs-2 mb-3"></i>
+                    <p class="mb-0">No hay movimientos registrados</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="card card-fintech p-4">
+
+                <div class="row align-items-center">
+
+                    <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                        <h5 class="fw-bold mb-1">
+                            Seguridad de la billetera
+                        </h5>
+                        <p class="text-muted mb-0">
+                            Refuerza la protección activando autenticación multifactor.
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-lg-4 text-lg-end">
+                        <a asp-controller="Auth" asp-action="MfaSetting" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-shield-halved me-2"></i>Configurar MFA
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
 
 @section Scripts
 {
     <script src="~/js/ajax/user-ajax-scripts.js" asp-append-version="true"></script>
 }
 
+
 @section Styles
 {
-    
+    <link rel="stylesheet" href="~/css/user/wallet.css" />
 }

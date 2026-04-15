@@ -6,7 +6,150 @@
     Layout = "~/Views/Shared/_LayoutPrivate.cshtml";
 }
 
-<h1>Dashboard</h1>
+<main>
+
+    <!-- HERO / RESUMEN -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <!-- Saludo -->
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-2">
+                        Bienvenido de nuevo 👋
+                    </h2>
+
+                    <p class="text-muted mb-4">
+                        Aquí puedes gestionar tu billetera, revisar movimientos y mantener tu cuenta segura.
+                    </p>
+
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a asp-controller="User" asp-action="Wallet" class="btn btn-fintech px-4">
+                            <i class="fa-solid fa-wallet me-2"></i>Mi billetera
+                        </a>
+
+                        <a asp-controller="User" asp-action="Transactions" class="btn btn-outline-secondary px-4">
+                            <i class="fa-solid fa-right-left me-2"></i>Ver transacciones
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Resumen rápido -->
+                <div class="col-12 col-lg-6">
+                    <div class="card card-fintech p-4 bg-fintech">
+
+                        <h6 class="text-uppercase small mb-2">Saldo disponible</h6>
+                        <h2 class="fw-bold mb-3">$0.00</h2>
+
+                        <div class="d-flex justify-content-between small">
+                            <span>
+                                <i class="fa-solid fa-arrow-down me-1"></i>Ingresos: $0.00
+                            </span>
+                            <span>
+                                <i class="fa-solid fa-arrow-up me-1"></i>Egresos: $0.00
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACCIONES RÁPIDAS -->
+    <section class="py-5">
+        <div class="container">
+
+            <h4 class="fw-bold mb-4">Acciones rápidas</h4>
+
+            <div class="row g-4">
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-paper-plane text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Enviar dinero</h6>
+                        <p class="text-muted small">Realiza transferencias rápidas a otros usuarios.</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-download text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Recibir fondos</h6>
+                        <p class="text-muted small">Comparte tu cuenta para recibir pagos.</p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card card-fintech p-4 text-center h-100">
+                        <i class="fa-solid fa-credit-card text-fintech fs-2 mb-3"></i>
+                        <h6 class="fw-semibold">Agregar tarjeta</h6>
+                        <p class="text-muted small">Vincula una tarjeta para operar fácilmente.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ACTIVIDAD RECIENTE -->
+    <section class="py-5 bg-light">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0">Actividad reciente</h4>
+                <a asp-controller="User" asp-action="Transactions" class="small text-decoration-none">
+                    Ver todo
+                </a>
+            </div>
+
+            <div class="card card-fintech p-4">
+
+                <div class="text-center text-muted py-4">
+                    <i class="fa-solid fa-clock fs-2 mb-3"></i>
+                    <p class="mb-0">Aún no tienes transacciones registradas</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section class="py-5">
+        <div class="container">
+
+            <div class="card card-fintech p-4">
+
+                <div class="row align-items-center">
+
+                    <div class="col-12 col-lg-8 mb-3 mb-lg-0">
+                        <h5 class="fw-bold mb-1">
+                            Protege tu cuenta
+                        </h5>
+                        <p class="text-muted mb-0">
+                            Activa la autenticación de dos factores para mayor seguridad.
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-lg-4 text-lg-end">
+                        <a asp-controller="Auth" asp-action="MfaSetting" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-shield-halved me-2"></i>Configurar MFA
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
 
 @section Scripts
 {
@@ -15,5 +158,5 @@
 
 @section Styles
 {
-    
+    <link rel="stylesheet" href="~/css/user/dashboard.css" />
 }
