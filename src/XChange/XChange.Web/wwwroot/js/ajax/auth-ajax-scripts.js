@@ -216,19 +216,22 @@ $(document).ready(function () {
 
                     case 0:
                         toastr.warning(resp.msg || "Código incorrecto o expirado.");
-
+                        $btn.prop('disabled', false);
                         break;
 
                     case 2:
                         toastr.info("Se requiere nueva verificación.");
+                        $btn.prop('disabled', false);
                         break;
 
                     case 99:
                         toastr.error("Error interno. Intenta nuevamente.");
+                        $btn.prop('disabled', false);
                         break;
 
                     default:
                         toastr.info(resp.msg || "Procesando...");
+                        $btn.prop('disabled', false);
                         break;
                 }
             },
