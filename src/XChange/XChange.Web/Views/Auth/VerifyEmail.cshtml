@@ -1,0 +1,169 @@
+﻿@using XChange.Web.ViewModels;
+@model VerifyEmailViewModel;
+
+@*
+    Vista para verificar el email del usuario.
+*@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Email</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast-style.css" asp-append-version="true" />
+</head>
+<body>
+    
+    <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
+
+            <!-- Card general -->
+            <div class="col-12 col-lg-10 col-xl-8">
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+                    <div class="row g-0">
+
+                        <!-- Banner lateral -->
+                        <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
+
+                            <h2 class="mb-4 fw-bold">Verificación de correo</h2>
+
+                            <p class="mb-4">
+                                Confirma tu dirección de correo electrónico para activar tu cuenta de forma segura.
+                            </p>
+
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-envelope me-2"></i>
+                                    Ingresa tu correo registrado
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-paper-plane me-2"></i>
+                                    Recibirás un código de verificación
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-shield-halved me-2"></i>
+                                    Protege tu cuenta contra accesos indebidos
+                                </li>
+                            </ul>
+
+                            <div class="mt-4">
+                                <small>
+                                    Este proceso garantiza que solo tú puedas activar tu cuenta.
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <!-- Formulario -->
+                        <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
+                            <div class="w-100">
+
+                                <h4 class="mb-3 text-center fw-bold">Confirmar correo</h4>
+
+                                <p class="text-muted text-center mb-4">
+                                    Ingresa el correo con el que te registraste para continuar.
+                                </p>
+
+                                <form id="verifyEmailForm">
+                                    @Html.AntiForgeryToken()
+
+                                    <!-- Correo -->
+                                    <div class="form-floating mb-4">
+                                        <input asp-for="Email" type="email" class="form-control" placeholder="correo@ejemplo.com" required>
+                                            <label asp-for="Email" class="text-muted">Correo electrónico</label>
+                                        </div>
+
+                                        <!-- Botones -->
+                                        <div class="d-flex gap-2">
+
+                                            <a asp-action="Login" asp-controller="Auth"
+                                                   class="btn btn-outline-danger w-50">
+                                                Cancelar
+                                            </a>
+
+                                            <button type="submit" class="btn btn-primary w-50">
+                                                Confirmar
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Modal de verificación -->
+        <div class="modal fade" id="verifyCodeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4">
+
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title fw-bold">Verificar código</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body text-center">
+
+                        <p class="text-muted mb-4">
+                            Ingresa el código que enviamos a tu correo electrónico.
+                        </p>
+
+                        <form id="verifyEmailCodeForm">
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control text-center" placeholder="Código" required>
+                                <label class="text-muted">Código de verificación</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fa-solid fa-check me-2"></i>Verificar
+                            </button>
+                        </form>
+
+                    </div>
+
+                    <div class="modal-footer border-0 justify-content-center">
+                        <small class="text-muted">
+                            ¿No recibiste el código? Puedes solicitar uno nuevo.
+                        </small>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+
+        <!-- Footer -->
+        <footer class="bg-white border-top py-4 mt-auto">
+            <div class="container text-center">
+                <small class="text-muted fw-medium">&copy; @DateTime.Now.Year XChange. Todos los derechos reservados.</small>
+            </div>
+        </footer>
+
+    <!-- Scripts -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/ajax/auth-ajax-scripts.js" asp-append-version="true"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/toast-script.js"></script>
+    
+    </body>
+</html>
