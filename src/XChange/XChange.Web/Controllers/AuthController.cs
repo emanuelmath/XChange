@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using XChange.Core.Constants;
 using XChange.Core.Entities;
-using XChange.Core.Exceptions;
 using XChange.Core.Interfaces;
 using XChange.Web.Filters;
 using XChange.Web.ViewModels;
@@ -16,7 +15,7 @@ namespace XChange.Web.Controllers
     
     public class AuthController(
             IUserRepository userRepo,
-            //IUser2faRepository faRepo,
+            IUser2faRepository faRepo,
             IPasswordHasher passwordHasher) : Controller
     {
         [AllowAnonymous]
@@ -119,7 +118,7 @@ namespace XChange.Web.Controllers
             }
             catch (Exception)
             {
-                return Json(new { cod = 99, msg = "Error de seguridad: La cuenta tiene una contraseña obsoleta." });
+                return Json(new { cod = 99, msg = "La cuenta tiene una contraseña obsoleta. Contacte a soporte." });
             }
 
             var claims = new List<Claim>
@@ -146,11 +145,11 @@ namespace XChange.Web.Controllers
             TempData["PendingUserId"] = user.Id;
             TempData["PendingUserEmail"] = user.Email;
 
-            bool has2fa = false; // await faRepo.Is2faEnabledAsync(user.Id);
+            bool? has2fa = await faRepo.Is2faEnabledAsync(user.Id);
 
-            if (has2fa)
+            if (has2fa != null && has2fa == true)
             {
-                return Json(new { cod = 1, msg = "Inicio de Sesión exitoso, redirigiendo a MFA." }); //Json(new { success = true, redirectUrl = Url.Action("VerifyMfa") });
+                return Json(new { cod = 2, msg = "Inicio de Sesión exitoso, redirigiendo a MFA." }); //Json(new { success = true, redirectUrl = Url.Action("VerifyMfa") });
             }
             else
             {
@@ -210,9 +209,9 @@ namespace XChange.Web.Controllers
             TempData["PendingUserId"] = finalUserId;
             TempData["PendingUserEmail"] = email;
 
-            bool has2fa = false;//await faRepo.Is2faEnabledAsync(finalUserId);
+            bool? has2fa = await faRepo.Is2faEnabledAsync(finalUserId);
 
-            if (has2fa)
+            if (has2fa != null && has2fa == true)
             {
                 TempData["PendingUserId"] = finalUserId;
                 TempData["PendingUserEmail"] = email;
@@ -233,7 +232,7 @@ namespace XChange.Web.Controllers
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Dashboard", "User");
             }
         }
     }

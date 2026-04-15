@@ -12,7 +12,7 @@ namespace XChange.Web.Filters
 
             if (user.Identity != null && user.Identity.IsAuthenticated)
             {
-                context.Result = new RedirectToActionResult("Index", "Home", null);
+                context.Result = new RedirectToActionResult("Dashboard", "User", null);
             }
 
             base.OnActionExecuting(context);

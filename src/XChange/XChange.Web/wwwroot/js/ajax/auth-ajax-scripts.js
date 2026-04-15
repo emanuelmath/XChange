@@ -16,6 +16,7 @@ $(document).ready(function () {
      * 3. Envía los datos hacia el backend.
      * 4. Proporciona retroalimentación por medio de un toast dependiendo de la respuesta.
      *      -Cod 1: Proceso exitoso.
+     *      -Cod 2: Proceso exitoso, pero debe hacer verificación de 2 pasos.
      *      -Cod 0: Credenciales incorrectas.
      *      -Cod 99: Error interno.
     */
@@ -49,27 +50,29 @@ $(document).ready(function () {
                             window.location.href = "/User/Dashboard";
                         }, 3000);
                         break;
-
+                    case 2:
+                        toastr.success(resp.msg || "Inicio de sesión exitoso");
+                        setTimeout(() => {
+                            window.location.href = "/Auth/VerifyMfa";
+                        }, 3000);
+                        break;
                     case 0:
                         toastr.warning(resp.msg || "Credenciales incorrectas");
+                        $btn.prop('disabled', false);
                         break;
-
                     case 99:
-                        toastr.error("Error interno. Intenta nuevamente.");
+                        toastr.error(resp.msg || "Error interno. Intenta nuevamente.");
                         break;
-
+                        $btn.prop('disabled', false);
                     default:
                         toastr.info(resp.msg || "Procesando...");
                         break;
+                        $btn.prop('disabled', false);
                 }
             },
-
             error: function (jqxhr, textStatus, errorThrown) {
                 toastr.error("Error inesperado en el servidor");
                 console.error("Error AJAX:", textStatus, errorThrown);
-            },
-            complete: function () {
-                $btn.prop('disabled', false);
             }
         });
     });
@@ -139,14 +142,17 @@ $(document).ready(function () {
 
                     case 0:
                         toastr.warning(resp.msg || "No se pudo completar el registro");
+                        $btn.prop('disabled', false);
                         break;
 
                     case 99:
-                        toastr.error("Error interno. Intenta nuevamente.");
+                        toastr.error("Error interno. Intenta nuevamente." || resp.msg);
+                        $btn.prop('disabled', false);
                         break;
 
                     default:
                         toastr.info(resp.msg || "Procesando...");
+                        $btn.prop('disabled', false);
                         break;
                 }
             },
@@ -154,10 +160,6 @@ $(document).ready(function () {
             error: function (jqxhr, textStatus, errorThrown) {
                 toastr.error("Error inesperado en el servidor");
                 console.error("Error AJAX:", textStatus, errorThrown);
-            },
-
-            complete: function () {
-                $btn.prop('disabled', false);
             }
         });
     });
@@ -195,7 +197,7 @@ $(document).ready(function () {
         $btn.prop('disabled', true);
 
         $.ajax({
-            url: "/Auth/VerifyMfa",
+            url: "/Auth/VerifyMfaUser",
             type: "POST",
             data: $form.serialize(),
             timeout: 10000,
@@ -205,7 +207,7 @@ $(document).ready(function () {
                 switch (resp.cod) {
 
                     case 1:
-                        toastr.success(resp.msg || "Verificación exitosa");
+                        toastr.success(resp.msg || "Verificación exitosa.");
 
                         setTimeout(() => {
                             window.location.href = "/User/Dashboard";
@@ -213,19 +215,23 @@ $(document).ready(function () {
                         break;
 
                     case 0:
-                        toastr.warning(resp.msg || "Código incorrecto o expirado");
+                        toastr.warning(resp.msg || "Código incorrecto o expirado.");
+                        $btn.prop('disabled', false);
                         break;
 
                     case 2:
-                        toastr.info("Se requiere nueva verificación");
+                        toastr.info("Se requiere nueva verificación.");
+                        $btn.prop('disabled', false);
                         break;
 
                     case 99:
                         toastr.error("Error interno. Intenta nuevamente.");
+                        $btn.prop('disabled', false);
                         break;
 
                     default:
                         toastr.info(resp.msg || "Procesando...");
+                        $btn.prop('disabled', false);
                         break;
                 }
             },
@@ -233,10 +239,6 @@ $(document).ready(function () {
             error: function (jqxhr, textStatus, errorThrown) {
                 toastr.error("Error inesperado en el servidor");
                 console.error("Error AJAX:", textStatus, errorThrown);
-            },
-
-            complete: function () {
-                $btn.prop('disabled', false);
             }
         });
     });
