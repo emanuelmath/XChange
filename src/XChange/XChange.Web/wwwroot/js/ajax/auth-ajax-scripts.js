@@ -468,6 +468,6 @@ $(document).ready(function () {
      */
     $("#showNewPassword").on("change", function () {
         const type = this.checked ? "text" : "password";
-        $("#Password").attr("type", type);
+        $("#NewPassword").attr("type", type);
     });
 });
