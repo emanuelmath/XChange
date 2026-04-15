@@ -16,6 +16,7 @@ namespace XChange.Web.Controllers
     public class AuthController(
             IUserRepository userRepo,
             IUser2faRepository faRepo,
+            IMfaService mfaService,
             IPasswordHasher passwordHasher) : Controller
     {
         [AllowAnonymous]
@@ -34,6 +35,7 @@ namespace XChange.Web.Controllers
 
         [AllowAnonymous]
         [RedirectIfAuthenticated]
+        [RedirectIfNotLoginForMfa]
         public IActionResult VerifyMfa()
         {
             return View();
@@ -121,39 +123,41 @@ namespace XChange.Web.Controllers
                 return Json(new { cod = 99, msg = "La cuenta tiene una contraseña obsoleta. Contacte a soporte." });
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Email),
-                new Claim(ClaimTypes.Email, user.Email)
-            };
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
-            {
-                IsPersistent = request.RememberMe, 
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1) 
-            };
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties);
-
-            // Guardamos datos temporales para el flujo de MFA.
-            TempData["PendingUserId"] = user.Id;
-            TempData["PendingUserEmail"] = user.Email;
-
             bool? has2fa = await faRepo.Is2faEnabledAsync(user.Id);
 
             if (has2fa != null && has2fa == true)
             {
-                return Json(new { cod = 2, msg = "Inicio de Sesión exitoso, redirigiendo a MFA." }); //Json(new { success = true, redirectUrl = Url.Action("VerifyMfa") });
+
+                HttpContext.Session.SetInt32("PendingUserId", user.Id);
+                HttpContext.Session.SetString("PendingUserEmail", user.Email);
+                HttpContext.Session.SetString("PendingUserName", user.FirstName);
+
+                return Json(new { cod = 2, msg = "Credenciales válidas, requiere MFA." });
             }
             else
             {
-                return Json(new { cod = 1, msg = "Inicio de Sesión exitoso, redirigiendo a Home." });//Json(new { success = true, redirectUrl = Url.Action("SetupMfa") });
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName),
+                    new Claim(ClaimTypes.Email, user.Email)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = request.RememberMe,
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                };
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity),
+                    authProperties);
+
+                return Json(new { cod = 1, msg = "Inicio de Sesión exitoso, redirigiendo a Home." });
             }
         }
 
@@ -203,18 +207,16 @@ namespace XChange.Web.Controllers
             }
 
             if (finalUserId <= 0)
-                return RedirectToAction("Login", "Auth"); 
-
- 
-            TempData["PendingUserId"] = finalUserId;
-            TempData["PendingUserEmail"] = email;
+                return RedirectToAction("Login", "Auth");
 
             bool? has2fa = await faRepo.Is2faEnabledAsync(finalUserId);
 
             if (has2fa != null && has2fa == true)
             {
-                TempData["PendingUserId"] = finalUserId;
-                TempData["PendingUserEmail"] = email;
+                HttpContext.Session.SetInt32("PendingUserId", finalUserId);
+                HttpContext.Session.SetString("PendingUserEmail", email!);
+                HttpContext.Session.SetString("PendingUserName", firstName);
+
                 return RedirectToAction("VerifyMfa");
             }
             else
@@ -233,6 +235,68 @@ namespace XChange.Web.Controllers
                     new ClaimsPrincipal(claimsIdentity));
 
                 return RedirectToAction("Dashboard", "User");
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> VerifyMfaUser(VerifyMfaViewModel verifyMfaViewModel)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { cod = 0, msg = "Código inválido." });
+
+
+            int? idUser = HttpContext.Session.GetInt32("PendingUserId");
+            string? email = HttpContext.Session.GetString("PendingUserEmail");
+            string? firstName = HttpContext.Session.GetString("PendingUserName");
+
+            if (idUser != null && email != null && firstName != null)
+            {
+                var idString = idUser.ToString();
+                var key = await faRepo.GetSecretKeyAsync((int)idUser);
+                if (key != null)
+                {
+                    var resp = mfaService.ValidatePin(key, verifyMfaViewModel.Code);
+                    if(resp)
+                    {
+                        var userClaims = new List<Claim>
+                         {
+                            new Claim(ClaimTypes.NameIdentifier, idString),
+                            new Claim(ClaimTypes.Email, email!),
+                            new Claim(ClaimTypes.Name, firstName)
+                         };
+
+                        var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                        await HttpContext.SignInAsync(
+                            CookieAuthenticationDefaults.AuthenticationScheme,
+                            new ClaimsPrincipal(claimsIdentity));
+
+                        HttpContext.Session.Remove("PendingUserId");
+                        HttpContext.Session.Remove("PendingUserEmail");
+                        HttpContext.Session.Remove("PendingUserName");
+
+                        return Json(new { cod = 1, msg = "Verificación completada." });
+                    }
+                    else
+                    {
+                        return Json(new { cod = 0, msg = "Código incorrecto." });
+                    }
+                }
+                else
+                {
+                    HttpContext.Session.Remove("PendingUserId");
+                    HttpContext.Session.Remove("PendingUserEmail");
+                    HttpContext.Session.Remove("PendingUserName");
+                    return Json(new { cod = 99, msg = "No tienes doble verificación u error al obtenerla." });
+                }
+            }
+            else
+            {
+                HttpContext.Session.Remove("PendingUserId");
+                HttpContext.Session.Remove("PendingUserEmail");
+                HttpContext.Session.Remove("PendingUserName");
+                return Json(new { cod = 99, msg = "Sesión inválida." });
             }
         }
     }

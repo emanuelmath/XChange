@@ -207,34 +207,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body text-center">
+            <form id="activateMfaForm">
+                @Html.AntiForgeryToken()
+                <div class="modal-body text-center">
 
-                <p class="text-muted mb-3">
-                    Escanea este código QR con tu aplicación de autenticación (Google Authenticator, Authy, etc.)
-                </p>
+                    <p class="text-muted mb-3">
+                        Escanea este código QR con tu aplicación de autenticación (Google Authenticator, Authy, etc.)
+                    </p>
 
-                <!-- QR -->
-                <div class="text-center mb-3">
-                    <img src="@ViewBag.BarcodeImageUrl" alt="Código QR de Seguridad" class="img-fluid" />
+                    <div class="text-center mb-4 p-3 border rounded-3 bg-light d-inline-block">
+                        <img src="@ViewBag.BarcodeImageUrl" alt="Código QR de Seguridad" class="img-fluid" />
+                    </div>
+
+                    <p class="small text-muted mb-3">
+                        Una vez escaneado, ingresa el código generado para completar la activación.
+                    </p>
+
+                    <div class="form-floating px-4">
+                        <input type="text" class="form-control text-center fs-4 fw-bold tracking-widest"
+                               id="mfaCode" name="Code" placeholder="000000" maxlength="6" required autocomplete="off">
+                        <label for="mfaCode" class="text-muted">Código de 6 dígitos</label>
+                    </div>
+
                 </div>
 
-                <p class="small text-muted">
-                    Una vez escaneado, deberás ingresar el código generado para completar la activación.
-                </p>
-
-            </div>
-
-            <div class="modal-footer border-0">
-
-                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                    Cancelar
-                </button>
-
-                <button class="btn btn-success">
-                    <i class="fa-solid fa-check me-2"></i>Confirmar activación
-                </button>
-
-            </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success" id="btnConfirmMfa">
+                        <i class="fa-solid fa-check me-2"></i>Confirmar activación
+                    </button>
+                </div>
+            </form>
 
         </div>
     </div>

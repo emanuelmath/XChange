@@ -189,7 +189,7 @@ $(document).ready(function () {
 
         const code = $("#Code").val();
 
-        if (!code || code.length < 4) {
+        if (!code || code.length < 6) {
             toastr.warning("Ingresa un código válido");
             return;
         }
@@ -225,7 +225,7 @@ $(document).ready(function () {
                         break;
 
                     case 99:
-                        toastr.error("Error interno. Intenta nuevamente.");
+                        toastr.error(resp.msg || "Error interno. Intenta nuevamente.");
                         $btn.prop('disabled', false);
                         break;
 

@@ -18,7 +18,7 @@ namespace XChange.Infrastructure.Repositories
 
             var parameters = new DynamicParameters();
             parameters.Add("@p_user_id", user2fa.UserId);
-            parameters.Add("@psecret_key", user2fa.SecretKey);
+            parameters.Add("@p_secret_key", user2fa.SecretKey);
 
             return await conn.QuerySingleAsync<int>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
         }
@@ -33,9 +33,12 @@ namespace XChange.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<byte[]> GetSecretKeyAsync(int userId)
+        public async Task<byte[]?> GetSecretKeyAsync(int userId)
         {
-            throw new NotImplementedException();
+            using var conn = connectionFactory.CreateConnection();
+            string query = "SELECT secret_key AS SecretKey FROM user_2fa WHERE user_id = @UserId";
+            var result = await conn.QueryFirstOrDefaultAsync<byte[]?>(query, new { UserId = userId });
+            return result;
         }
 
         public async Task<bool?> Is2faEnabledAsync(int userId)
