@@ -1,93 +1,118 @@
 ﻿@*
-    Vista parcial para la verificación de código de MFA para el módulo Auth.
+    Vista para la verificación de código de MFA para el módulo Auth.
 *@
+
+@using XChange.Web.ViewModels;
+@model VerifyMfaViewModel;
+
 @{
-    ViewData["Title"] = "Verificación de código";
-    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    Layout = null;
 }
 
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-    <div class="row w-100 justify-content-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar identidad</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/fontawesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth/verifymfa.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toast-style.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
 
-        <!-- Card general -->
-        <div class="col-12 col-lg-10 col-xl-8">
-            <div class="card border-0 shadow rounded-4 overflow-hidden">
-                <div class="row g-0">
+            <!-- Card general -->
+            <div class="col-12 col-lg-10 col-xl-8">
+                <div class="card border-0 shadow rounded-4 overflow-hidden">
+                    <div class="row g-0">
 
-                    <!-- Banner lateral -->
-                    <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
+                        <!-- Banner lateral -->
+                        <div class="col-lg-5 d-none d-lg-flex flex-column justify-content-center bg-primary text-white p-5">
 
-                        <h2 class="mb-4 fw-bold">Verificación de seguridad</h2>
+                            <h2 class="mb-4 fw-bold">Verificación de seguridad</h2>
 
-                        <p class="mb-4">
-                            Hemos enviado un código de verificación a tu correo electrónico.
-                        </p>
-
-                        <ul class="list-unstyled">
-                            <li class="mb-3">
-                                <i class="fa-solid fa-envelope me-2"></i>
-                                Revisa tu bandeja de entrada
-                            </li>
-                            <li class="mb-3">
-                                <i class="fa-solid fa-clock me-2"></i>
-                                El código expira en pocos minutos
-                            </li>
-                            <li class="mb-3">
-                                <i class="fa-solid fa-shield-halved me-2"></i>
-                                Protección adicional para tu cuenta
-                            </li>
-                        </ul>
-
-                    </div>
-
-                    <!-- Formulario -->
-                    <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
-                        <div class="w-100 text-center">
-
-                            <h4 class="mb-3 fw-bold">Verificar código</h4>
-
-                            <p class="text-muted mb-4">
-                                Ingresa el código de verificación enviado a tu correo
+                            <p class="mb-4">
+                                Hemos enviado un código de verificación a tu correo electrónico.
                             </p>
 
-                            <form id="verifyCodeForm">
-                                @Html.AntiForgeryToken()
+                            <ul class="list-unstyled">
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-envelope me-2"></i>
+                                    Revisa tu bandeja de entrada
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-clock me-2"></i>
+                                    El código expira en pocos minutos
+                                </li>
+                                <li class="mb-3">
+                                    <i class="fa-solid fa-shield-halved me-2"></i>
+                                    Protección adicional para tu cuenta
+                                </li>
+                            </ul>
 
-                                <!-- Input de Código -->
-                                <div class="form-floating mb-4">
-                                    <input type="number" class="form-control text-center" placeholder="000000" required>
-                                    <label class="text-muted">Código de verificación</label>
-                                </div>
+                        </div>
 
-                                <!-- Botones de acción -->
-                                <div class="d-flex gap-2">
+                        <!-- Formulario -->
+                        <div class="col-12 col-lg-7 bg-white d-flex align-items-center p-4 p-lg-5">
+                            <div class="w-100 text-center">
 
-                                    <a asp-action="Login" asp-controller="Auth"
-                                           class="btn btn-outline-danger w-50">
-                                        Cancelar
-                                    </a>
+                                <h4 class="mb-3 fw-bold">Verificar código</h4>
 
-                                    <button type="submit" class="btn btn-primary w-50">
-                                        Confirmar
-                                    </button>
+                                <p class="text-muted mb-4">
+                                    Ingresa el código de verificación enviado a tu correo
+                                </p>
 
-                                </div>
+                                <form id="verifyCodeForm">
+                                    @Html.AntiForgeryToken()
 
-                            </form>
+                                    <!-- Input de Código -->
+                                    <div class="form-floating mb-4">
+                                        <input asp-for="Code" type="number" class="form-control text-center" placeholder="000000" required>
+                                        <label asp-for="Code" class="text-muted">Código de verificación</label>
+                                    </div>
+
+                                    <!-- Botones de acción -->
+                                    <div class="d-flex gap-2">
+
+                                        <a asp-action="Login" asp-controller="Auth"
+                                               class="btn btn-outline-danger w-50">
+                                            Cancelar
+                                        </a>
+
+                                        <button type="submit" class="btn btn-primary w-50">
+                                            Confirmar
+                                        </button>
+
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-@section Scripts
-{
+    <!-- Footer -->
+    <footer class="mt-4">
+        <div class="container text-center">
+            <small class="text-muted fw-medium">&copy; @DateTime.Now.Year XChange. Todos los derechos reservados.</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/toast-script.js"></script>
     <script src="~/js/ajax/auth-ajax-scripts.js" asp-append-version="true"></script>
-}
-
-@section Styles
-{
-    <link rel="stylesheet" href="~/css/auth/verifymfa.css" asp-append-version="true" />
-}
+</body>
+</html>
