@@ -19,10 +19,12 @@ builder.Services.AddSingleton<IDbConnectionFactory>(new SqlConnectionFactory(con
 // Repositorios.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUser2faRepository, User2faRepository>();
+builder.Services.AddScoped<ISecurityTokenRepository, SecurityTokenRepository>();
 
 // Servicios de Seguridad Externos.
 builder.Services.AddSingleton<IPasswordHasher, BcryptPasswordHasher>();
 builder.Services.AddSingleton<IMfaService, GoogleMfaService>();
+builder.Services.AddSingleton<IEmailService,  EmailService>();
 
 // Configuración de Autenticación (Cookies + Google OAuth).
 builder.Services.AddAuthentication(options =>

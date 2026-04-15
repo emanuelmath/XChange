@@ -4,7 +4,8 @@ using System.Text;
 
 namespace XChange.Core.Interfaces
 {
-    public class IEmailService
+    public interface IEmailService
     {
+        Task<bool> SendEmailAsync(string toName, string toEmail, string subject, string body, string htmlBody);
     }
 }

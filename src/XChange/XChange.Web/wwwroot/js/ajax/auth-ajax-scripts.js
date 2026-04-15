@@ -56,6 +56,12 @@ $(document).ready(function () {
                             window.location.href = "/Auth/VerifyMfa";
                         }, 3000);
                         break;
+                    case 3:
+                        toastr.success(resp.msg || "Inicio de sesión exitoso, a confirmar correo.");
+                        setTimeout(() => {
+                            window.location.href = "/Auth/VerifyEmail";
+                        }, 3000);
+                        break;
                     case 0:
                         toastr.warning(resp.msg || "Credenciales incorrectas");
                         $btn.prop('disabled', false);
@@ -424,6 +430,71 @@ $(document).ready(function () {
 
             complete: function () {
                 $btn.prop('disabled', false);
+            }
+        });
+    });
+
+    $("#verifyEmailForm").on("submit", function (event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const $form = $(this);
+        const $btn = $form.find('button[type="submit"]');
+
+        if ($btn.prop('disabled')) return;
+
+        const code = $("#Code").val();
+
+        if (!code || code.length < 6) {
+            toastr.warning("Ingresa un código válido");
+            return;
+        }
+
+        $btn.prop('disabled', true);
+
+        $.ajax({
+            url: "/Auth/VerifyEmailUser",
+            type: "POST",
+            data: $form.serialize(),
+            timeout: 10000,
+
+            success: function (resp) {
+
+                switch (resp.cod) {
+
+                    case 1:
+                        toastr.success(resp.msg || "Verificación exitosa.");
+
+                        setTimeout(() => {
+                            window.location.href = "/User/Dashboard";
+                        }, 2000);
+                        break;
+
+                    case 0:
+                        toastr.warning(resp.msg || "Código incorrecto o expirado.");
+                        $btn.prop('disabled', false);
+                        break;
+
+                    case 98:
+                        toastr.info("Se requiere nueva verificación.");
+                        $btn.prop('disabled', false);
+                        break;
+
+                    case 99:
+                        toastr.error(resp.msg || "Error interno. Intenta nuevamente.");
+                        $btn.prop('disabled', false);
+                        break;
+
+                    default:
+                        toastr.info(resp.msg || "Procesando...");
+                        $btn.prop('disabled', false);
+                        break;
+                }
+            },
+
+            error: function (jqxhr, textStatus, errorThrown) {
+                toastr.error("Error inesperado en el servidor");
+                console.error("Error AJAX:", textStatus, errorThrown);
             }
         });
     });

@@ -16,8 +16,10 @@ namespace XChange.Web.Controllers
     public class AuthController(
             IUserRepository userRepo,
             IUser2faRepository faRepo,
+            ISecurityTokenRepository secuRepo,
             IMfaService mfaService,
-            IPasswordHasher passwordHasher) : Controller
+            IPasswordHasher passwordHasher,
+            IEmailService emailService) : Controller
     {
         [AllowAnonymous]
         [RedirectIfAuthenticated]
@@ -58,9 +60,19 @@ namespace XChange.Web.Controllers
         [AllowAnonymous]
         [RedirectIfNotLoginForMfa]
         [RedirectIfAuthenticated]
+        [RedirectIfNotVerifyEmail]
         public IActionResult VerifyEmail()
         {
             return View();
+        }
+        [Authorize] 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Login", "Auth");
         }
 
         [HttpPost]
@@ -144,28 +156,58 @@ namespace XChange.Web.Controllers
             }
             else
             {
-
-                var claims = new List<Claim>
+                if(user.IsEmailVerified)
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.FirstName),
-                    new Claim(ClaimTypes.Email, user.Email)
-                };
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.FirstName),
+                        new Claim(ClaimTypes.Email, user.Email)
+                    };
 
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                var authProperties = new AuthenticationProperties
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = request.RememberMe,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                    };
+
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                    return Json(new { cod = 1, msg = "Inicio de Sesión exitoso, redirigiendo a Home." });
+                }
+                else
                 {
-                    IsPersistent = request.RememberMe,
-                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
-                };
+                    var tokenString = new Random().Next(100000, 999999).ToString();
+                    var secuToken = new Core.Entities.SecurityToken(user.Id, tokenString, SecurityTokenTypes.EmailVerification);
+                    var resp = await secuRepo.CreateAsync(secuToken);
+                    
 
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
 
-                return Json(new { cod = 1, msg = "Inicio de Sesión exitoso, redirigiendo a Home." });
+                    if (resp > 0)
+                    {
+                        HttpContext.Session.SetString("PendingSecurityToken", tokenString);
+                        HttpContext.Session.SetInt32("PendingUserId", user.Id);
+                        HttpContext.Session.SetString("EmailVerificationToken", user.Email);
+
+                        string asunto = "Confirma tu correo en XChange";
+                        string htmlBody = $"<h2>Hola {user.FirstName}</h2><p>Tu código de seguridad es: <b>{tokenString}</b></p>";
+
+                        await emailService.SendEmailAsync(user.FirstName, user.Email, asunto, "Activa html para ver el mensaje.", htmlBody);
+
+                        return Json(new { cod = 3, msg = "Confirma tu correo electrónico para iniciar sesión. Redirigiendo..." });
+
+                    }
+                    else
+                    {
+                        return Json(new { cod = 99, msg = "Error al querer confirmar tu correo..." });
+                    }    
+                    
+                }
             }
         }
 
@@ -305,6 +347,67 @@ namespace XChange.Web.Controllers
                 HttpContext.Session.Remove("PendingUserEmail");
                 HttpContext.Session.Remove("PendingUserName");
                 return Json(new { cod = 99, msg = "Sesión inválida." });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> VerifyEmailUser(VerifyEmailViewModel verifyEmailViewModel)
+        {
+            if (!ModelState.IsValid)
+                return Json(new { cod = 0, msg = "No ingresaste el código." });
+
+            int? pendingUserId = HttpContext.Session.GetInt32("PendingUserId");
+            string? email = HttpContext.Session.GetString("EmailVerificationToken");
+
+            if (pendingUserId == null || string.IsNullOrEmpty(email))
+            {
+                return Json(new { cod = 99, msg = "La sesión ha expirado. Por favor, vuelve a iniciar sesión para generar un nuevo código." });
+            }
+
+            var dbToken = await secuRepo.GetValidTokenAsync((int)pendingUserId, SecurityTokenTypes.EmailVerification);
+
+            if (dbToken == null)
+            {
+                return Json(new { cod = 0, msg = "El código no existe o ya ha expirado. Solicita uno nuevo." });
+            }
+
+            if (dbToken.TokenHash != verifyEmailViewModel.Code.Trim())
+            {
+                return Json(new { cod = 0, msg = "El código ingresado es incorrecto." });
+            }
+
+            try
+            {
+                await secuRepo.ChangeToUsedAsync(dbToken.Id);
+
+                await userRepo.VerifyEmailAsync((int)pendingUserId);
+
+                var user = await userRepo.GetByEmailAsync(email);
+
+                var userClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user!.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.FirstName),
+                    new Claim(ClaimTypes.Email, user.Email)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity));
+
+                
+                HttpContext.Session.Remove("PendingUserId");
+                HttpContext.Session.Remove("EmailVerificationToken");
+                HttpContext.Session.Remove("PendingSecurityToken");
+
+                return Json(new { cod = 1, msg = "Correo verificado correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { cod = 99, msg = "Error interno al verificar la cuenta." });
             }
         }
     }

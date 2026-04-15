@@ -71,7 +71,7 @@
                                 <h4 class="mb-3 text-center fw-bold">Confirmar correo</h4>
 
                                 <p class="text-muted text-center mb-4">
-                                    Ingresa el correo con el que te registraste para continuar.
+                                    Ingresa el código que llegó al correo que te registraste para continuar.
                                 </p>
 
                                 <form id="verifyEmailForm">
@@ -79,8 +79,8 @@
 
                                     <!-- Correo -->
                                     <div class="form-floating mb-4">
-                                        <input asp-for="Email" type="email" class="form-control" placeholder="correo@ejemplo.com" required>
-                                            <label asp-for="Email" class="text-muted">Correo electrónico</label>
+                                        <input asp-for="Code" class="form-control" placeholder="******" required>
+                                            <label asp-for="Code" class="text-muted">Código de validación</label>
                                         </div>
 
                                         <!-- Botones -->

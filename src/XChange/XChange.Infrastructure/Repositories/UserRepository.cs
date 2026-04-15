@@ -46,7 +46,8 @@ namespace XChange.Infrastructure.Repositories
                        last_name AS LastName, 
                        auth_provider AS AuthProvider, 
                        google_id AS GoogleId,
-                       status
+                       status,
+                       is_email_verified AS IsEmailVerified
                        FROM users 
                     WHERE email = @Email";
 
@@ -65,6 +66,37 @@ namespace XChange.Infrastructure.Repositories
             return await conn.ExecuteAsync(sql, new
             {
                 GoogleId = googleId,
+                Id = id,
+            });
+        }
+
+        public async Task<int> UpdateStatusAsync(int id, string status)
+        {
+            using var conn = connectionFactory.CreateConnection();
+
+            var sql = @"
+                    UPDATE users
+                    SET user_status = @status
+                    WHERE id = @id";
+
+            return await conn.ExecuteAsync(sql, new
+            {
+                Status = status,
+                Id = id,
+            });
+        }
+
+        public async Task<int> VerifyEmailAsync(int id)
+        {
+            using var conn = connectionFactory.CreateConnection();
+
+            var sql = @"
+                    UPDATE users
+                    SET is_email_verified = 1
+                    WHERE id = @id";
+
+            return await conn.ExecuteAsync(sql, new
+            {
                 Id = id,
             });
         }

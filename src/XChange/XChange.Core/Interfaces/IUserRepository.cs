@@ -13,6 +13,7 @@ namespace XChange.Core.Interfaces
         Task<int> CreateAsync(User user);
         Task<int> LinkGoogleIdToUser(string googleId, int id);
         //Task UpdatePasswordAsync(int userId, string newPasswordHash);
-        //Task UpdateStatusAsync(int userId, string status);
+        Task<int> UpdateStatusAsync(int id, string status);
+        Task<int> VerifyEmailAsync(int id);
     }
 }
