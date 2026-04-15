@@ -60,7 +60,7 @@ namespace XChange.Infrastructure.Repositories
 
             var sql = @"
                     UPDATE users
-                    SET google_id = @googleId, is_email_verified = 1
+                    SET google_id = @googleId, is_email_verified = 1, auth_provider = 'google'
                     WHERE id = @id";
 
             return await conn.ExecuteAsync(sql, new
