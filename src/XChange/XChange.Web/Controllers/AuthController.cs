@@ -53,6 +53,13 @@ namespace XChange.Web.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        [RedirectIfAuthenticated]
+        public IActionResult VerifyEmail()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> RegisterUser(RegisterViewModel request)
