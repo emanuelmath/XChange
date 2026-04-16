@@ -5,29 +5,35 @@
     --cyan: #82a1d1;
     --blue: #344c92;
     --dark-blue: #1c2751;
+    --green: #8a9586;
+    --my-bgcolor: #f8f9fa;
 }
 
 body {
     font-family: "Exo 2", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 450;
-    font-style: normal;
     background-color: var(--my-bgcolor);
 }
 
+/* --- Capas de color: su función es sobreescribir colores de bootstrap --- */
+
 .bg-fintech {
-    background-color: var(--blue);
-    color: white;
+    background-color: var(--blue) !important;
+    color: white !important;
 }
 
 .text-fintech {
-    color: var(--blue);
+    color: var(--blue) !important;
+}
+
+.text-success-fintech {
+    color: var(--green) !important;
 }
 
 .btn-fintech {
     background-color: var(--blue);
     color: #fff;
     border: none;
+    transition: all 0.3s ease;
 }
 
     .btn-fintech:hover {
@@ -35,115 +41,59 @@ body {
         color: #fff;
     }
 
+/* --- Componentes --- */
+
 .card-fintech {
-    border: none;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.08);
-    border-radius: 1rem;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
 }
 
-/*.text-red {
-    color: var(--my-red) !important;
+.fintech-hero {
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
 }
 
-.text-cyan {
-    color: var(--my-cyan) !important;
+/* Offset para que la tarjeta flote (si no carga el CSS, se verá pegada pero funcional) */
+.floating-card {
+    margin-top: -3.5rem;
 }
 
-.text-white {
-    color: var(--my-white) !important;
+.icon-circle {
+    width: 3.5rem;
+    height: 3.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(85, 114, 178, 0.1);
+    color: var(--blue);
 }
 
-.text-white:hover {
-    color: var(--my-cyan) !important;
+.navbar-fintech {
+    background-color: var(--blue) !important;
 }
 
-.text-black {
-    color: var(--my-black) !important;
+/* Navbar Pill: Si falla el CSS, se verá como un link normal de Bootstrap */
+.profile-pill {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.btn-white {
-    background-color: var(--my-white);
-    border-color: var(--my-white);
-    color: var(--my-black); 
+/* --- Utilidades específicas para Wallet (Añadir al final) --- */
+.border-dashed {
+    border: 2px dashed #dee2e6 !important;
 }
 
-.btn-white:hover {
-    background-color: var(--my-cyan);
-    color: var(--my-black);
-}
-
-.btn-black {
-    background-color: var(--my-black);
-    border-color: var(--my-black);
-    color: var(--my-white);
-}
-
-.btn-black:hover {
-    background-color: var(--my-red);
-    color: var(--my-white);
-}
-
-.card-blue {
-    background-color: var(--my-black);
-    border: 3px solid var(--my-red);
-    border-radius: 20px;
-    color: var(--my-white);
-    height: 100%;
+.card-method {
+    min-height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    text-align: center;
-    padding: 20px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.card-blue:hover {
-    transform: scale(1.05);
-}
-
-header.sticky-top {
-    background-color: var(--my-bgcolor); 
-    z-index: 1020; 
-}
-
-a {
-    color: var(--my-cyan);
-    text-decoration: none;
-}
-
-.a-link {
-    text-decoration: underline;
-    font-size: 0.9rem;
-    color: var(--my-white);
-}
-
-.a-link:hover {
-    color: var(--my-cyan);
-}
-
-.my-card-body {
-    background-color: var(--my-bgcolor)
-}
-
-.section-login {
-    max-width: 450px;
-}
-
-.section-register {
-    max-width: 600px;
-}
-
-.login-card, .register-card {
-    background-color: var(--my-black);
-    border: 2px solid var(--my-red);
-    border-radius: 40px;
-}
-
-.login-input, .register-input {
-    background-color: var(--my-bgcolor) !important;
-    border: 1px solid var(--my-white) !important;
-    color: var(--my-white) !important;
-}
-
-.form-floating label {
-    color: var(--my-white);
-}*/
+    .card-method:hover {
+        background-color: rgba(85, 114, 178, 0.05);
+        border-color: var(--blue) !important;
+    }
