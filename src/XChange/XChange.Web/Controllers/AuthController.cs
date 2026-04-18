@@ -182,7 +182,7 @@ namespace XChange.Web.Controllers
                 else
                 {
                     var tokenString = new Random().Next(100000, 999999).ToString();
-                    var secuToken = new Core.Entities.SecurityToken(user.Id, tokenString, SecurityTokenTypes.EmailVerification);
+                    var secuToken = new Core.Entities.SecurityToken(user.Id, tokenString, SecurityTokenType.EmailVerification);
                     var resp = await secuRepo.CreateAsync(secuToken);
                     
 
@@ -364,7 +364,7 @@ namespace XChange.Web.Controllers
                 return Json(new { cod = 99, msg = "La sesión ha expirado. Por favor, vuelve a iniciar sesión para generar un nuevo código." });
             }
 
-            var dbToken = await secuRepo.GetValidTokenAsync((int)pendingUserId, SecurityTokenTypes.EmailVerification);
+            var dbToken = await secuRepo.GetValidTokenAsync((int)pendingUserId, SecurityTokenType.EmailVerification);
 
             if (dbToken == null)
             {

@@ -23,8 +23,8 @@ namespace XChange.Core.Entities
         {
             if (userId <= 0) throw new CreateSecurityTokenException(nameof(UserId));
             if (string.IsNullOrWhiteSpace(tokenHash)) throw new CreateSecurityTokenException(nameof(TokenHash));
-            if (string.IsNullOrWhiteSpace(type))
-                throw new CreateSecurityTokenException(nameof(Type));
+            if (string.IsNullOrWhiteSpace(type)) throw new CreateSecurityTokenException(nameof(Type));
+            if (type != SecurityTokenType.EmailVerification || type != SecurityTokenType.PasswordReset || type != SecurityTokenType.MFA)
 
             UserId = userId;
             TokenHash = tokenHash;

@@ -4,5 +4,5 @@ using System.Text;
 
 namespace XChange.Core.Exceptions
 {
-    public class CreateSecurityTokenException(string field) : CoreException($"El campo {field} es inválido");
+    public class CreateSecurityTokenException(string field) : CoreException($"El campo {field} es inválido.");
 }
