@@ -1,4 +1,9 @@
-**/wwwroot/js/bootstrap*.js linguist-vendored=true
-**/wwwroot/js/jquery*.js linguist-vendored=true
-**/wwwroot/css/bootstrap*.css linguist-vendored=true
-**/wwwroot/fontawesome/** linguist-vendored=true
+**/wwwroot/** linguist-vendored=true
+*.css linguist-detectable=false
+*.html linguist-detectable=false
+*.js linguist-detectable=false
+*.cshtml linguist-detectable=false
+**/js/bootstrap*.js linguist-vendored=true
+**/js/jquery*.js linguist-vendored=true
+**/css/bootstrap*.css linguist-vendored=true
+**/fontawesome/** linguist-vendored=true
